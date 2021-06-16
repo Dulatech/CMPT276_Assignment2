@@ -131,6 +131,21 @@ public class Main {
     
   }
 
+  @GetMapping("/deleterectangle/all")
+  public String deleteAllRectangle(Map<String, Object> model){
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      stmt.executeUpdate("TRUNCATE TABLE Rectangle RESTART IDENTITY");
+    
+
+      return "redirect:/";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+    
+  }
+
 
   @GetMapping("/rectangle/{rid}")
   public String getSpecificRectangle(Map<String, Object> model, @PathVariable String rid){
