@@ -23,10 +23,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,8 +42,8 @@ import java.util.Map;
 @SpringBootApplication
 public class Main {
 
-  @Value("${spring.datasource.url}")
-  private String dbUrl;
+  // @Value("${spring.datasource.url}")
+  // private String dbUrl;
 
   @Autowired
   private DataSource dataSource;
@@ -49,9 +53,122 @@ public class Main {
   }
 
   @RequestMapping("/")
-  String index() {
-    return "index";
+  String index(Map<String, Object> model) {
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM Rectangle");
+
+      ArrayList<Rectangle> output = new ArrayList<Rectangle>();
+      while (rs.next()) {
+        String name = rs.getString("Name");
+        Integer id = rs.getInt("ID");
+        Float width = rs.getFloat("width");
+        Float height = rs.getFloat("height");
+        String color = rs.getString("color");
+        String borderColor = rs.getString("bordercolor");
+        Float borderWidth = rs.getFloat("borderwidth");
+        Rectangle rectangle = new Rectangle();
+        rectangle.setID(id);
+        rectangle.setName(name);
+        rectangle.setWidth(width);
+        rectangle.setHeight(height);
+        rectangle.setColor(color);
+        rectangle.setBorderColor(borderColor);
+        rectangle.setBorderWidth(borderWidth);
+        
+        output.add(rectangle);
+      }
+
+      model.put("records", output);
+      return "index";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
   }
+
+  @RequestMapping("/addrectangle")
+  String getRectangleForm(Map<String, Object> model) {
+    Rectangle rectangle = new Rectangle();
+    model.put("rectangle", rectangle);
+    return "addrectangle";
+  }
+
+  @PostMapping(
+    path = "/addrectangle",
+    consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+  )
+  public String handleBrowserRectangleSubmit(Map<String, Object> model, Rectangle rectangle) throws Exception {
+    // Save the person data into the database
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS Rectangle (ID serial, name varchar(20), width REAL, height REAL, color varchar(20), bordercolor varchar(20), borderwidth REAL)");
+      String sql = "INSERT INTO Rectangle (name, width, height, color, bordercolor, borderwidth) VALUES ('" + rectangle.getName() + "'," + rectangle.getWidth() 
+      + "," + rectangle.getHeight() + ",'"  + rectangle.getColor() + "','" + rectangle.getBorderColor() + "',"   + rectangle.getBorderWidth() + ")";
+      stmt.executeUpdate(sql);
+      System.out.println(rectangle.getID() + " " + rectangle.getName()); // print person on console
+      return "redirect:/";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+
+  }
+
+
+  @GetMapping("/deleterectangle/{rid}")
+  public String deleteSpecificRectangle(Map<String, Object> model, @PathVariable String rid){
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      stmt.executeUpdate("DELETE FROM Rectangle WHERE ID = " + rid);
+    
+
+      return "redirect:/";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+    
+  }
+
+
+  @GetMapping("/rectangle/{rid}")
+  public String getSpecificRectangle(Map<String, Object> model, @PathVariable String rid){
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM Rectangle WHERE ID = " + rid);
+      
+      Rectangle rectangle = new Rectangle();
+      if(rs.next()){
+        String name = rs.getString("Name");
+        Integer id = rs.getInt("ID");
+        Float width = rs.getFloat("width");
+        Float height = rs.getFloat("height");
+        String color = rs.getString("color");
+        String borderColor = rs.getString("bordercolor");
+        Float borderWidth = rs.getFloat("borderwidth");
+        
+        rectangle.setID(id);
+        rectangle.setName(name);
+        rectangle.setWidth(width);
+        rectangle.setHeight(height);
+        rectangle.setColor(color);
+        rectangle.setBorderColor(borderColor);
+        rectangle.setBorderWidth(borderWidth);
+      }
+    
+      model.put("record", rectangle);
+      return "rectangle";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+    
+  }
+
+  
+
+  
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
@@ -75,14 +192,22 @@ public class Main {
   }
 
   @Bean
-  public DataSource dataSource() throws SQLException {
-    if (dbUrl == null || dbUrl.isEmpty()) {
-      return new HikariDataSource();
-    } else {
+  public DataSource dataSource() throws URISyntaxException {
+    // if (dbUrl == null || dbUrl.isEmpty()) {
+    //   return new HikariDataSource();
+    // } else {
       HikariConfig config = new HikariConfig();
+      URI dbUri = new URI(System.getenv("DATABASE_URL"));
+
+      String username = dbUri.getUserInfo().split(":")[0];
+      String password = dbUri.getUserInfo().split(":")[1];
+      String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
       config.setJdbcUrl(dbUrl);
+      config.setUsername(username);
+      config.setPassword(password);
       return new HikariDataSource(config);
-    }
+    // }
   }
 
 }
+

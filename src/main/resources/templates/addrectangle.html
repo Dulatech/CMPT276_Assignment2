@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'addrectangle')}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New rectangle Form</title>
+  </head>
+  <body>
+    <form
+      action="#"
+      method="post"
+      th:action="@{/addrectangle}"
+      th:object="${rectangle}"
+    >
+      <input required type="text" th:field="*{name}" placeholder="name" />
+      <br />
+      <input required type="number" th:field="*{width}" placeholder="width" />
+      <br />
+      <input required type="number" th:field="*{height}" placeholder="height" />
+      <br />
+      <input required type="text" th:field="*{color}" placeholder="color" />
+      <br />
+      <input
+        required
+        type="text"
+        th:field="*{borderColor}"
+        placeholder="border color"
+      />
+      <br />
+      <input
+        type="number"
+        th:field="*{borderWidth}"
+        placeholder="border width"
+      />
+      <br />
+      <input type="submit" value="Add Rectangle" />
+    </form>
+  </body>
+</html>
