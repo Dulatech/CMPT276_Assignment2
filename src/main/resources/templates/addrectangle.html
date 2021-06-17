@@ -16,28 +16,40 @@
       th:action="@{/addrectangle}"
       th:object="${rectangle}"
     >
-      <input required type="text" th:field="*{name}" placeholder="name" />
+      <label>Name</label><br />
+      <input required type="text" th:field="*{name}" placeholder="Name" />
       <br />
-      <input required type="number" th:field="*{width}" placeholder="width" />
+      <label>Width</label><br />
+      <input required type="number" th:field="*{width}" placeholder="Width" />px
       <br />
-      <input required type="number" th:field="*{height}" placeholder="height" />
-      <br />
-      <input required type="text" th:field="*{color}" placeholder="color" />
-      <br />
+      <label>Height</label><br />
       <input
         required
-        type="text"
+        type="number"
+        th:field="*{height}"
+        placeholder="Height"
+      />px
+      <br />
+      <label>Color</label><br />
+      <input required type="color" th:field="*{color}" placeholder="Color" />
+      <br />
+      <label>Border Color</label><br />
+      <input
+        required
+        type="color"
         th:field="*{borderColor}"
-        placeholder="border color"
+        placeholder="Border Color"
       />
       <br />
+      <label>Border Width</label><br />
       <input
         type="number"
         th:field="*{borderWidth}"
-        placeholder="border width"
-      />
+        placeholder="Border Width"
+      />px
       <br />
       <input type="submit" value="Add Rectangle" />
     </form>
   </body>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
 </html>

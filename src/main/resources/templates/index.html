@@ -4,9 +4,8 @@
   th:replace="~{fragments/layout :: layout (~{::body},'index')}"
 >
   <body>
-    <div class="container">
-      <h1>Rectangles</h1>
-      <table>
+    <div>
+      <table style="margin-top: 20px; margin-bottom: 10px">
         <tr>
           <th>ID</th>
           <th>Name</th>
@@ -19,7 +18,7 @@
               ><p th:text="${record.Name}"></p
             ></a>
           </td>
-          <td><p th:text="${record.Color}"></p></td>
+          <td th:style="'background:' + ${record.Color} + ';'"></td>
         </tr>
 
         <tr>

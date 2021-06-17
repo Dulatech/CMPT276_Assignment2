@@ -10,7 +10,17 @@
     <title>New rectangle Form</title>
   </head>
   <body>
-    <div class="container">
+    <div>
+      <div
+        th:style="'background:' + ${record.Color} + '; width:' + ${record.width} + 'px; height:' + ${record.height} + 'px; border: ' + ${record.borderWidth} + 'px solid ' + ${record.borderColor} + '; margin-top: 20px; margin-bottom: 20px; display: flex;
+        align-items: center'"
+      >
+        <p
+          class="color-text"
+          style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+          th:text="${record.name}"
+        ></p>
+      </div>
       <table>
         <tr>
           <td><p>ID</p></td>

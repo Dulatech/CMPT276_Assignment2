@@ -2,4 +2,44 @@ table,
 td,
 th {
   border: 1px solid black;
+  padding: 2px 5px;
+  min-width: 80px;
+}
+
+p {
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+.color-text {
+  font-size: 14pt;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+
+label {
+  margin-top: 5px;
+  margin-bottom: 0;
 }
