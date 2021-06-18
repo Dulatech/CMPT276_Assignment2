@@ -4,34 +4,41 @@
   th:replace="~{fragments/layout :: layout (~{::body},'index')}"
 >
   <body>
-    <div>
-      <table style="margin-top: 20px; margin-bottom: 10px">
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Color</th>
-        </tr>
-        <tr th:each="record : ${records}">
-          <td><p th:text="${record.ID}"></p></td>
-          <td>
-            <a th:href="@{/rectangle/{rid}(rid=${record.ID})}"
-              ><p th:text="${record.Name}"></p
-            ></a>
-          </td>
-          <td th:style="'background:' + ${record.Color} + ';'"></td>
-        </tr>
-
-        <tr>
-          <td colspan="3">
-            <a th:href="@{/addrectangle}">Add New Rectangle</a>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <a th:href="@{/deleterectangle/all}">Delete All</a>
-          </td>
-        </tr>
-      </table>
+    <div class="cont">
+      <div th:if="${#lists.isEmpty(records)}">
+        <h3>There are no rectangles to show, please add a rectangle.</h3>
+        <form action="#" method="get" th:action="@{/addrectangle}">
+          <input class="blue-button" type="submit" value="Add Rectangle" />
+        </form>
+      </div>
+      <div th:if="${not #lists.isEmpty(records)}">
+        <table style="margin-top: 20px; margin-bottom: 10px">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Color</th>
+          </tr>
+          <tr th:each="record : ${records}">
+            <td><p th:text="${record.ID}"></p></td>
+            <td>
+              <a th:href="@{/rectangle/{rid}(rid=${record.ID})}"
+                ><p th:text="${record.Name}"></p
+              ></a>
+            </td>
+            <td th:style="'background:' + ${record.Color} + ';'"></td>
+          </tr>
+        </table>
+        <form action="#" method="get" th:action="@{/addrectangle}">
+          <input class="blue-button" type="submit" value="Add Rectangle" />
+        </form>
+        <form action="#" method="get" th:action="@{/deleterectangle/all}">
+          <input
+            class="red-button"
+            type="submit"
+            value="Delete All Rectangles"
+          />
+        </form>
+      </div>
     </div>
   </body>
 </html>

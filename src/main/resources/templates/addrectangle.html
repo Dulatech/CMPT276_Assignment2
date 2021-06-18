@@ -10,46 +10,63 @@
     <title>New rectangle Form</title>
   </head>
   <body>
-    <form
-      action="#"
-      method="post"
-      th:action="@{/addrectangle}"
-      th:object="${rectangle}"
-    >
-      <label>Name</label><br />
-      <input required type="text" th:field="*{name}" placeholder="Name" />
-      <br />
-      <label>Width</label><br />
-      <input required type="number" th:field="*{width}" placeholder="Width" />px
-      <br />
-      <label>Height</label><br />
-      <input
-        required
-        type="number"
-        th:field="*{height}"
-        placeholder="Height"
-      />px
-      <br />
-      <label>Color</label><br />
-      <input required type="color" th:field="*{color}" placeholder="Color" />
-      <br />
-      <label>Border Color</label><br />
-      <input
-        required
-        type="color"
-        th:field="*{borderColor}"
-        placeholder="Border Color"
-      />
-      <br />
-      <label>Border Width</label><br />
-      <input
-        type="number"
-        th:field="*{borderWidth}"
-        placeholder="Border Width"
-      />px
-      <br />
-      <input type="submit" value="Add Rectangle" />
-    </form>
+    <div class="cont">
+      <form
+        action="#"
+        method="post"
+        th:action="@{/addrectangle}"
+        th:object="${rectangle}"
+      >
+        <label>Name</label><br />
+        <input
+          required
+          type="text"
+          maxlength="20"
+          th:field="*{name}"
+          placeholder="Name"
+        />
+        <br />
+        <label>Width</label><br />
+        <input
+          required
+          type="number"
+          step="0.01"
+          th:field="*{width}"
+          placeholder="Width"
+        />px
+        <br />
+        <label>Height</label><br />
+        <input
+          required
+          type="number"
+          step="0.01"
+          th:field="*{height}"
+          placeholder="Height"
+        />px
+        <br />
+        <label>Color</label><br />
+        <input required type="color" th:field="*{color}" placeholder="Color" />
+        <br />
+        <label>Border Color</label><br />
+        <input
+          required
+          type="color"
+          th:field="*{borderColor}"
+          placeholder="Border Color"
+        />
+        <br />
+        <label>Border Width</label><br />
+        <input
+          required
+          type="number"
+          step="0.01"
+          th:field="*{borderWidth}"
+          placeholder="Border Width"
+        />px
+        <br />
+        <input class="blue-button" type="submit" value="Add Rectangle" />
+      </form>
+    </div>
   </body>
   <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
 </html>

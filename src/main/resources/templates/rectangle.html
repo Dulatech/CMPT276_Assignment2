@@ -10,7 +10,7 @@
     <title>New rectangle Form</title>
   </head>
   <body>
-    <div>
+    <div class="cont">
       <div
         th:style="'background:' + ${record.Color} + '; width:' + ${record.width} + 'px; height:' + ${record.height} + 'px; border: ' + ${record.borderWidth} + 'px solid ' + ${record.borderColor} + '; margin-top: 20px; margin-bottom: 20px; display: flex;
         align-items: center'"
@@ -23,41 +23,41 @@
       </div>
       <table>
         <tr>
-          <td><p>ID</p></td>
+          <td><b>ID</b></td>
           <td><p th:text="${record.ID}"></p></td>
         </tr>
         <tr>
-          <td><p>Name</p></td>
+          <td><b>Name</b></td>
           <td><p th:text="${record.name}"></p></td>
         </tr>
         <tr>
-          <td><p>Width</p></td>
-          <td><p th:text="${record.width}"></p></td>
+          <td><b>Width</b></td>
+          <td><span th:text="${record.width}"></span>px</td>
         </tr>
         <tr>
-          <td><p>Height</p></td>
-          <td><p th:text="${record.height}"></p></td>
+          <td><b>Height</b></td>
+          <td><span th:text="${record.height}"></span>px</td>
         </tr>
         <tr>
-          <td><p>Color</p></td>
+          <td><b>Color</b></td>
           <td><p th:text="${record.color}"></p></td>
         </tr>
         <tr>
-          <td><p>Border Color</p></td>
+          <td><b>Border Color</b></td>
           <td><p th:text="${record.borderColor}"></p></td>
         </tr>
         <tr>
-          <td><p>Border Width</p></td>
-          <td><p th:text="${record.borderWidth}"></p></td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <a th:href="@{/deleterectangle/{rid}(rid=${record.ID})}"
-              >Delete Rectangle</a
-            >
-          </td>
+          <td><b>Border Width</b></td>
+          <td><span th:text="${record.borderWidth}"></span>px</td>
         </tr>
       </table>
+      <form
+        action="#"
+        method="get"
+        th:action="@{/deleterectangle/{rid}(rid=${record.ID})}"
+      >
+        <input class="red-button" type="submit" value="Delete Rectangle" />
+      </form>
     </div>
   </body>
 </html>

@@ -1,7 +1,7 @@
 table,
 td,
 th {
-  border: 1px solid black;
+  border: 2px solid #555;
   padding: 2px 5px;
   min-width: 80px;
 }
@@ -35,11 +35,90 @@ li a:hover {
 }
 
 .color-text {
+  text-align: center;
+  vertical-align: middle;
   font-size: 14pt;
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+  margin: 0 auto;
 }
 
 label {
   margin-top: 5px;
   margin-bottom: 0;
+}
+
+.cont {
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-bottom: 30px;
+}
+
+input[type="text"] {
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border: 3px solid #555;
+}
+
+input[type="color"] {
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+input[type="color"]:focus {
+  border: 3px solid #555;
+}
+
+input[type="number"] {
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+input[type="number"]:focus {
+  border: 3px solid #555;
+}
+
+.blue-button {
+  background-color: #4481db;
+  border: none;
+  color: white;
+  padding: 5px 0;
+  text-decoration: none;
+  margin-top: 10px;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  font-weight: bold;
+  min-width: 190px;
+}
+.blue-button:hover {
+  background-color: #3361a5;
+}
+
+.red-button {
+  background-color: #ca0f0f;
+  border: none;
+  color: white;
+  padding: 5px 0;
+  text-decoration: none;
+  margin-top: 10px;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  font-weight: bold;
+  min-width: 190px;
+}
+.red-button:hover {
+  background-color: #721111;
 }
